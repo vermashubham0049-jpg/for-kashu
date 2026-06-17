@@ -345,8 +345,8 @@
         <p style="font-size: 0.9rem; opacity:0.6; margin-top: 25px; font-family: var(--font-mono);">Tap Heart Lock to Decrypt 🔓</p>
     </div>
 
-    <!-- AUDIO ENGINE TARGET FIXED -->
-    <audio id="loveSong" loop preload="auto">
+    <!-- AUDIO ENGINE WITH ABSOLUTE DIRECT URL STREAMING -->
+    <audio id="loveSong" loop preload="auto" crossorigin="anonymous">
         <source src="https://pub-832f91a5dbfe43f3b925b4fa267cc2fa.r2.dev/Khwaab_Eclipse_Nova_Acoustic_Stream.mp3" type="audio/mpeg">
     </audio>
 
@@ -587,6 +587,21 @@
     </div>
 
     <script>
+        // FORCED MASTER AUDIO CONTEXT LAYER (Bulletproof Autoplay Engine)
+        const song = document.getElementById('loveSong');
+        
+        function tryPlayAudio() {
+            if (song && song.paused) {
+                song.play()
+                .then(() => console.log("Audio pipeline successfully cracked open."))
+                .catch(err => console.log("Engine scanning for native gesture trigger. Passive routing primed."));
+            }
+        }
+
+        // Global Event Hooks to force-unblock mobile context on ANY raw touch
+        document.addEventListener('click', tryPlayAudio);
+        document.addEventListener('touchstart', tryPlayAudio);
+
         function createStarrySky() {
             for(let i=0; i<85; i++) {
                 const star = document.createElement('div');
@@ -623,25 +638,21 @@
         }
 
         function forcePlaySong(startTime) {
-            const song = document.getElementById('loveSong');
             const widget = document.getElementById('music-disk-widget');
             if(song) {
                 if(startTime > 0) song.currentTime = startTime;
                 
-                // Audio force re-trigger pattern setup
-                const startPromise = song.play();
-                if(startPromise !== undefined) {
-                    startPromise.then(() => {
-                        if(widget && startTime >= 76) {
-                            widget.style.display = "flex";
-                            widget.classList.add('playing');
-                            widget.innerHTML = "🎵";
-                        }
-                    }).catch(e => {
-                        // Fallback context: re-hook on explicit audio bypass triggers
-                        console.log("Browser unblock waiting.");
-                    });
-                }
+                song.play().then(() => {
+                    if(widget && startTime >= 76) {
+                        widget.style.display = "flex";
+                        widget.classList.add('playing');
+                        widget.innerHTML = "🎵";
+                    }
+                }).catch(e => {
+                    // Fail-safe secondary injection pattern
+                    song.muted = false;
+                    song.play();
+                });
             }
         }
 
@@ -650,12 +661,6 @@
         const rawFutureText = `Ek din aisa aayega jab ye late-night calls, ek dusre ko miss karna, aur milne ka intezaar... sab sirf yaadein hongi.\n\nHum shayad saath baith kar in baaton par hasenge aur kahenge,\n"Yaad hai kitna mushkil lagta tha?"\n\nPar tab tak, main har call, har message aur tumhare saath bitaaye har pal ko sambhal kar rakhunga.\n\nKyuki destination se pehle, mujhe tumhare saath ye journey bhi bohot pyaari hai. ❤️`;
 
         document.addEventListener('click', function(e) {
-            // Unblock audio anytime they interact anywhere on mobile
-            const song = document.getElementById('loveSong');
-            if(song && song.paused && !document.getElementById('envelope-gate')) {
-                song.play().catch(() => {});
-            }
-
             if(e.target.tagName === 'BUTTON' || e.target.classList.contains('choice-btn') || e.target.id === 'scratchCardLayer') return;
             for(let i=0; i<4; i++) {
                 const particle = document.createElement('div');
@@ -675,7 +680,6 @@
         });
 
         function toggleMusicPlayback() {
-            const song = document.getElementById('loveSong');
             const widget = document.getElementById('music-disk-widget');
             if(song.paused) {
                 song.play();
@@ -723,13 +727,14 @@
                 scratchMove(e);
             }
 
+            // High Precision Scratch Flow Engine Matrix
             function scratchMove(e) {
                 if(!isDrawing) return;
                 e.preventDefault();
                 const coords = getCoords(e);
                 ctx.globalCompositeOperation = 'destination-out';
                 ctx.beginPath();
-                ctx.arc(coords.x, coords.y, 28, 0, Math.PI * 2);
+                ctx.arc(coords.x, coords.y, 32, 0, Math.PI * 2); // Increased brush size to 32px for ultra-smooth edge response
                 ctx.fill();
             }
             
@@ -779,6 +784,7 @@
         }
         setInterval(updateLoveCounter, 1000); updateLoveCounter();
 
+        // RUNAWAY BOUNDARY SECURITY SYSTEM (Locks configuration completely within card space)
         function handleButtonRunaway(btnId, containerId, targetStaticBtnId) {
             const noBtn = document.getElementById(btnId);
             const container = document.getElementById(containerId);
@@ -797,14 +803,14 @@
             let overlap = true;
             let safetyCounter = 0;
 
-            while(overlap && safetyCounter < 40) {
+            while(overlap && safetyCounter < 50) {
                 randomX = Math.floor(Math.random() * (maxX - padding + 1)) + padding;
                 randomY = Math.floor(Math.random() * (maxY - padding + 1)) + padding;
                 
-                const greenXMin = staticBtn.offsetLeft - 25;
-                const greenXMax = staticBtn.offsetLeft + staticBtn.clientWidth + 25;
-                const greenYMin = staticBtn.offsetTop - 25;
-                const greenYMax = staticBtn.offsetTop + staticBtn.clientHeight + 25;
+                const greenXMin = staticBtn.offsetLeft - 30;
+                const greenXMax = staticBtn.offsetLeft + staticBtn.clientWidth + 30;
+                const greenYMin = staticBtn.offsetTop - 30;
+                const greenYMax = staticBtn.offsetTop + staticBtn.clientHeight + 30;
 
                 if (!(randomX >= greenXMin && randomX <= greenXMax && randomY >= greenYMin && randomY <= greenYMax)) {
                     overlap = false;
@@ -895,12 +901,7 @@
         }
 
         function resetApp() {
-            const song = document.getElementById('loveSong');
-            const widget = document.getElementById('music-disk-widget');
-            if(song) { song.pause(); song.currentTime = 0; }
-            if(widget) { widget.style.display = "none"; widget.classList.remove('playing'); }
             clearInterval(typeInterval);
-            
             window.location.reload(); 
         }
 
