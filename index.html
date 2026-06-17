@@ -1,0 +1,908 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FOR KASHISH ❤️</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght=600&family=Quicksand:wght=400;600&family=Share+Tech+Mono&display=swap');
+
+        :root {
+            --bg-color: #f3e8ff; 
+            --main-accent: #7e22ce; 
+            --text-light: #4a044e; 
+            --text-dark: #4a044e; 
+            --font-fancy: 'Dancing Script', cursive;
+            --font-body: 'Quicksand', sans-serif;
+            --font-mono: 'Share Tech Mono', monospace;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-light);
+            font-family: var(--font-body);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        .star {
+            position: absolute;
+            background: #a855f7; 
+            border-radius: 50%;
+            pointer-events: none;
+            animation: twinkle 2s infinite ease-in-out;
+            z-index: 1;
+        }
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.2; transform: scale(0.8); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+
+        #music-disk-widget {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            background: radial-gradient(circle, #f3e8ff 40%, #c084fc 100%);
+            border: 2px solid var(--main-accent);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            cursor: pointer;
+            z-index: 100000;
+            box-shadow: 0 0 15px rgba(126, 34, 206, 0.3);
+            display: none; 
+        }
+        #music-disk-widget.playing {
+            animation: rotateDisk 4s linear infinite;
+        }
+        @keyframes rotateDisk {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        #envelope-gate {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            background-color: var(--bg-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 99999;
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .envelope-box {
+            width: 280px;
+            height: 190px;
+            background: #ffffff;
+            border-radius: 12px;
+            position: relative;
+            box-shadow: 0 20px 40px rgba(126,34,206,0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            border: 2px solid #e9d5ff;
+            transition: transform 0.3s ease;
+        }
+        .envelope-box:hover { transform: scale(1.03); }
+        .envelope-flap {
+            position: absolute;
+            top: 0; left: 0; width: 0; height: 0;
+            border-left: 140px solid transparent;
+            border-right: 140px solid transparent;
+            border-top: 100px solid #fae8ff;
+            border-radius: 12px 12px 0 0;
+            transform-origin: top;
+            transition: transform 0.4s ease 0.2s;
+            z-index: 2;
+        }
+        .wax-seal {
+            font-size: 3.5rem;
+            position: absolute;
+            z-index: 3;
+            animation: sealPulse 1.5s infinite;
+            filter: drop-shadow(0 0 10px rgba(126,34,206,0.4));
+        }
+        @keyframes sealPulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.08); } }
+
+        .page {
+            display: none;
+            width: 100%;
+            max-width: 450px;
+            padding: 25px 20px;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            min-height: 100vh;
+            justify-content: center;
+            animation: viewFade 0.35s ease-out;
+            z-index: 5;
+        }
+        .page.active { display: flex; }
+
+        @keyframes viewFade {
+            0% { opacity: 0; transform: scale(0.95); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+
+        .tap-heart {
+            position: absolute;
+            font-size: 1.5rem;
+            pointer-events: none;
+            z-index: 99999;
+            animation: flyOut 0.6s ease-out forwards;
+        }
+        @keyframes flyOut {
+            0% { transform: translate(-50%, -50%) scale(0.5); opacity: 1; }
+            100% { transform: translate(var(--mx), var(--my)) scale(1.2); opacity: 0; }
+        }
+
+        .hug-heart {
+            position: fixed;
+            bottom: -50px;
+            font-size: 2.5rem;
+            pointer-events: none;
+            z-index: 9999;
+            animation: riseUp 3s linear forwards;
+        }
+        @keyframes riseUp {
+            0% { transform: translateY(0) translateX(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(-105vh) translateX(var(--rx)) rotate(360deg); opacity: 0; }
+        }
+
+        .next-btn {
+            background: linear-gradient(135deg, #c084fc 0%, #7e22ce 100%);
+            color: white;
+            border: none;
+            padding: 16px 32px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 8px 20px rgba(126, 34, 206, 0.3);
+            margin-top: 25px;
+            transition: all 0.2s ease;
+            width: 85%;
+            letter-spacing: 0.5px;
+        }
+        .next-btn:active { transform: scale(0.96); }
+        
+        .back-btn {
+            background: transparent;
+            color: var(--text-light);
+            border: 2px solid var(--text-light);
+            padding: 8px 22px;
+            border-radius: 25px;
+            font-size: 0.85rem;
+            margin-top: 25px;
+            cursor: pointer;
+            opacity: 0.7;
+        }
+
+        h1 { font-family: var(--font-fancy); font-size: 3.2rem; color: #4a044e; text-shadow: 0 0 10px rgba(192,132,252,0.2); }
+        h2 { font-family: var(--font-fancy); font-size: 2.2rem; color: #a855f7; margin-bottom: 10px; }
+
+        .heart-pulse { font-size: 5rem; animation: heartbeat 1.1s infinite cubic-bezier(0.215, 0.610, 0.355, 1); cursor: pointer; filter: drop-shadow(0 0 12px rgba(192,132,252,0.6)); margin-bottom: 10px; }
+        @keyframes heartbeat { 0%, 100% { transform: scale(1); } 25% { transform: scale(1.12); } 40% { transform: scale(1.05); } 60% { transform: scale(1.15); } }
+        
+        .counter-box { background: rgba(255, 255, 255, 0.6); backdrop-filter: blur(8px); border-radius: 20px; padding: 25px 20px; width: 100%; box-shadow: 0 15px 35px rgba(126,34,206,0.1); border: 1px solid rgba(192,132,252,0.4); margin: 15px 0; }
+        #love-counter span { color: #7e22ce; font-weight: 600; font-size: 2rem; font-family: var(--font-mono); text-shadow: 0 0 5px rgba(192,132,252,0.2); }
+
+        .game-area { position: relative; width: 100%; height: 320px; background: white; color: var(--text-dark); border-radius: 20px; box-shadow: 0 10px 25px rgba(126,34,206,0.1); margin-top: 15px; overflow: hidden; display: flex; flex-direction: column; align-items: center; padding: 25px 15px; border: 1px solid #e9d5ff; }
+        .game-buttons { position: relative; width: 100%; width: 100%; height: 180px; margin-top: 15px; }
+        
+        .choice-btn { 
+            width: 130px !important;
+            max-width: 130px !important;
+            height: 45px !important;
+            font-size: 0.9rem; 
+            font-weight: 600; 
+            border-radius: 30px; 
+            border: none; 
+            cursor: pointer; 
+            position: absolute;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 5px 8px !important;
+        }
+        
+        #yes-btn { background-color: #10b981; color: white; left: 5%; top: 20px; box-shadow: 0 4px 12px rgba(16,185,129,0.3); z-index: 10; }
+        #no-btn { background-color: #ef4444; color: white; right: 5%; top: 20px; transition: all 0.15s ease; box-shadow: 0 4px 12px rgba(239,68,68,0.2); z-index: 20; }
+
+        #truth-yes { background-color: #10b981; color: white; left: 5%; top: 20px; box-shadow: 0 4px 12px rgba(16,185,129,0.3); z-index: 10; }
+        #truth-no { background-color: #ef4444; color: white; right: 5%; top: 20px; transition: all 0.15s ease; box-shadow: 0 4px 12px rgba(239,68,68,0.2); z-index: 20; }
+
+        .memory-carousel-container {
+            width: 100vw;
+            max-width: 450px;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            display: flex;
+            gap: 20px;
+            padding: 20px 25px 30px 25px;
+            margin-left: calc(-50vw + 50%);
+            margin-right: calc(-50vw + 50%);
+        }
+        .memory-carousel-container::-webkit-scrollbar { display: none; }
+
+        .flip-card { flex: 0 0 82%; scroll-snap-align: center; height: 250px; perspective: 1000px; }
+        .flip-card-inner { position: relative; width: 100%; height: 100%; transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1); transform-style: preserve-3d; border-radius: 20px; box-shadow: 0 10px 25px rgba(126,34,206,0.1); }
+        .flip-card.flipped .flip-card-inner { transform: rotateY(180deg); }
+        .flip-card-front, .flip-card-back { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; border-radius: 20px; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 20px; }
+        .flip-card-front { background-color: rgba(255,255,255,0.7); backdrop-filter: blur(5px); border: 2px solid rgba(192,132,252,0.5); color: var(--text-light); font-size: 1.6rem; font-family: var(--font-fancy); font-weight: bold; }
+        .flip-card-back { background: linear-gradient(135deg, #c084fc 0%, #a855f7 100%); color: #fff; transform: rotateY(180deg); overflow-y: auto; text-align: center; justify-content: flex-start; }
+        .flip-card-back p { font-size: 0.95rem; line-height: 1.5; font-weight: 500; margin-top: auto; margin-bottom: auto; }
+
+        .step-dashboard { width: 100%; display: none; margin-top: 10px; }
+        .step-dashboard.active { display: block; }
+        
+        .final-card { 
+            background: white; 
+            color: var(--text-dark);
+            border-radius: 24px; 
+            padding: 25px; 
+            margin-bottom: 5px; 
+            text-align: left; 
+            height: 450px; 
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            border: 2px solid rgba(192, 132, 252, 0.6);
+            box-shadow: 0 0 15px rgba(192, 132, 252, 0.2);
+            animation: neonPulse 3s infinite ease-in-out;
+        }
+        @keyframes neonPulse {
+            0%, 100% { box-shadow: 0 0 12px rgba(192, 132, 252, 0.2), inset 0 0 5px rgba(192, 132, 252, 0.1); }
+            50% { box-shadow: 0 0 25px rgba(192, 132, 252, 0.5), inset 0 0 10px rgba(192, 132, 252, 0.2); border-color: rgba(168, 85, 247, 0.8); }
+        }
+
+        .scrollable-body-text {
+            overflow-y: auto;
+            flex-grow: 1;
+            padding-right: 5px;
+            margin-top: 10px;
+            font-size: 1.05rem;
+            line-height: 1.6;
+            white-space: pre-line;
+        }
+        .scrollable-body-text::-webkit-scrollbar { width: 4px; }
+        .scrollable-body-text::-webkit-scrollbar-thumb { background: rgba(192, 132, 252, 0.4); border-radius: 10px; }
+
+        .typing-cursor::after { content: '|'; animation: blink 0.7s infinite; }
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+
+        .reasons-container { display: flex; flex-direction: column; gap: 15px; }
+        .reason-item-box { background: #faf5ff; border-left: 4px solid var(--main-accent); padding: 10px 12px; border-radius: 4px 12px 12px 4px; }
+        .reason-title { font-weight: 700; color: #7e22ce; margin-bottom: 3px; font-size: 0.98rem; }
+        .reason-desc { font-size: 0.92rem; opacity: 0.9; line-height: 1.4; }
+
+        .openwhen-box { display: flex; flex-direction: column; gap: 12px; }
+        .details-item { background: #faf5ff; border: 1px solid #e9d5ff; border-radius: 12px; padding: 12px; text-align: left; }
+        .details-item summary { cursor: pointer; font-weight: bold; outline: none; color: var(--text-dark); }
+        .details-item p { margin-top: 8px; font-size: 0.95rem; opacity: 0.95; line-height: 1.5; white-space: pre-line; }
+
+        .scratch-container {
+            position: relative;
+            width: 100%;
+            height: 155px;
+            margin-top: 20px;
+            background: #faf5ff;
+            border-radius: 16px;
+            overflow: hidden;
+            border: 2px dashed var(--main-accent);
+            box-shadow: 0 5px 15px rgba(126,34,206,0.1);
+            user-select: none;
+            -webkit-user-select: none;
+        }
+        .scratch-under-text {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            font-size: 0.94rem;
+            font-weight: 600;
+            line-height: 1.5;
+            color: var(--text-dark);
+            z-index: 1;
+        }
+        .scratch-canvas {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            cursor: crosshair;
+            z-index: 2;
+            touch-action: none;
+        }
+
+        .heart-particle { position: fixed; color: rgba(168, 85, 247, 0.4); font-size: 1.3rem; pointer-events: none; animation: floatHearts 6.5s linear infinite; z-index: -1; }
+        @keyframes floatHearts { 0% { transform: translateY(100vh) rotate(0deg); opacity: 1; } 100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; } }
+    </style>
+</head>
+<body>
+
+    <div id="music-disk-widget" onclick="toggleMusicPlayback()">🎵</div>
+
+    <div id="envelope-gate">
+        <p style="font-size: 1.1rem; font-weight:600; margin-bottom: 20px; color:#7e22ce; letter-spacing: 0.5px;">You have a private secure letter...</p>
+        <div class="envelope-box" onclick="openEnvelope()">
+            <div class="envelope-flap" id="envFlap"></div>
+            <div class="wax-seal">💜</div>
+        </div>
+        <p style="font-size: 0.9rem; opacity:0.6; margin-top: 25px; font-family: var(--font-mono);">Tap Heart Lock to Decrypt 🔓</p>
+    </div>
+
+    <audio id="loveSong" loop preload="auto">
+        <source src="https://pub-832f91a5dbfe43f3b925b4fa267cc2fa.r2.dev/Khwaab_Eclipse_Nova_Acoustic_Stream.mp3" type="audio/mpeg">
+    </audio>
+
+    <div id="page1" class="page active">
+        <div class="heart-pulse" onclick="initializeSongBypass()">💜</div>
+        <h1 style="font-size: 2.8rem; margin-bottom: 5px;">For Kashish ❤️</h1>
+        <p style="opacity: 0.85; font-size: 1.05rem; padding: 0 15px;">Main tumhare liye ek highly secured personal database create kiya hai. Access panel niche hai.</p>
+        <button class="next-btn" onclick="initializeSongBypass()">Initialize Heart Check 🔓</button>
+    </div>
+
+    <div id="page2" class="page">
+        <h1>Time Sync Protocol ⏳</h1>
+        <p style="font-size: 1.1rem; margin: 15px 0; font-weight: 600; line-height: 1.5; color: #7e22ce;">
+            🌸 Kashish Tumse baat karte karte waqt ka pata nahi chalta, bas dil thoda aur tumhara ho jaata hai...
+        </p>
+        <div class="counter-box">
+            <p id="love-counter">Syncing Metrics...</p>
+        </div>
+        <button class="next-btn" onclick="navigateTo('page3')">💕 Open Love files</button>
+    </div>
+
+    <div id="page3" class="page">
+        <h1>🌷 Heart Checkpoint</h1>
+        <p style="font-size: 1.05rem; margin-top: 5px; margin-bottom: 10px; font-weight: 600; color: #7e22ce;">💌 Only honest feelings can unlock the next page.</p>
+        
+        <div class="game-area" id="gameArea1">
+            <p style="font-size: 0.85rem; font-weight: bold; padding: 0 10px; color: #b91c1c;">
+                🎯 Mission : Kashish bby Click "No" Button if you can 🔪
+            </p>
+            <p style="margin-top: 15px; font-weight: 600; font-size: 1.05rem;" id="gameQuestion1">Do you love me the most in this entire universe? 🥺</p>
+            <div class="game-buttons" id="btnContainer1">
+                <button class="choice-btn" id="yes-btn" onclick="winGame1()">YES</button>
+                <button class="choice-btn" id="no-btn" onmouseover="moveNo1()" ontouchstart="moveNo1(event)">NO</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="page4" class="page">
+        <h1 style="font-size: 2.6rem;">The Memory Vault 🎁</h1>
+        <p style="font-size: 1.05rem; font-weight: bold; margin-top: 5px; color: #7e22ce; padding: 0 5px; line-height: 1.4;">
+            👉 Cards ko left swipe karke dekho aur text padhne ke liye unpe tap karo!
+        </p>
+        
+        <div class="memory-carousel-container">
+            <div class="flip-card" onclick="this.classList.toggle('flipped')">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front">✨ Day 1</div>
+                    <div class="flip-card-back">
+                        <p>10th January 2026... Main bus me baith kar exam dene ja raha thaa, bohot zyada stressed thaa. Aur tabhi achanak phone par tumhara saamne se text aaya! 🥺 Online milne ke baad tumne us din jo saamne se message kiya na **Kashish**, usne mera poora stress gayab kar diya. Wahi se hamara ye pyaara safar shuru hua thaa. ❤️</p>
+                    </div>
+                </div>
+            </div>
+            <div class="flip-card" onclick="this.classList.toggle('flipped')">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front">❤️ Favorite</div>
+                    <div class="flip-card-back">
+                        <p>Wese toh mujhe tumhari har ek baat pasand hai **Kashish**, par tumhara wo sharmana aur baat karte-karte achanak se smile kar dena... wo mera absolute favourite view hai! Tumhari smile mere sabse kharab din ko bhi perfect bana dehti hai. 🌷</p>
+                    </div>
+                </div>
+            </div>
+            <div class="flip-card" onclick="this.classList.toggle('flipped')">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front">🤭 Cute Habit</div>
+                    <div class="flip-card-back">
+                        <p>Jab tum choti-choti baaton par gussa ho jaati ho aur apna gusse wala muh fulati ho na **Kashish**, tum sach me sabse zyada cute lagti ho! Mera kaam bas tumhe hamesha manana aur tumhare nakhre uthana hai, aur mujhe isme bohot maza aata hai. 😅</p>
+                    </div>
+                </div>
+            </div>
+            <div class="flip-card" onclick="this.classList.toggle('flipped')">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front">💍 Promise</div>
+                    <div class="flip-card-back">
+                        <p>**Kashish**, aane wale kal me chahe kitna bhi distance ho, ya kitne bhi mushkil din aayein, main hamesha tumhara sath nibhaunga. Main tumse promise karta hoon ki tumhe kabhi akela feel nahi hone dunga. Tum hamesha meri priority rahogi. ♾️</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <button class="next-btn" onclick="navigateTo('page5')">Proceed to the Truth meter</button>
+    </div>
+
+    <div id="page5" class="page">
+        <h1 style="font-size: 2.5rem;">The Truth Meter 🧠</h1>
+        
+        <div class="game-area" id="gameArea2">
+            <p style="margin-top: 20px; font-weight: 600; padding: 0 15px; font-size: 1.15rem; line-height: 1.4;" id="gameQuestion2">
+                Kashish meri jaan, Tum Mujhse Kitna pyaar karti ho 🤭
+            </p>
+            <div class="game-buttons" id="btnContainer2">
+                <button class="choice-btn" id="truth-yes" onclick="winGame2()">Bohot Bohot jyada shubham</button>
+                <button class="choice-btn" id="truth-no" onmouseover="moveNo2()" ontouchstart="moveNo2(event)">Ammm bata nahi sakti</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="page6" class="page">
+        <h1 style="font-size: 2.5rem;">Before You Continue.... 🌷</h1>
+        <div class="counter-box" style="border-color: var(--main-accent); background: rgba(255,255,255,0.5);">
+            <p style="font-size: 1.1rem; font-weight: 600; color: #4a044e; line-height: 1.6;">
+                Meri Kuhu Agle page par koi test nahi hai, koi puzzle nahi hai... bas meri kuch sachchi baatein hain, sirf tumhare liye ❤️
+            </p>
+        </div>
+        <button class="next-btn" onclick="navigateTo('page7')">Show Me 🥹</button>
+    </div>
+
+    <div id="page7" class="page">
+        <div id="finalConfirmModule" style="width: 100%; padding: 20px 0;">
+            <span style="font-size: 4rem;">🪻</span>
+            <p style="margin-top: 20px; font-size: 1.15rem; font-weight: 600; line-height: 1.6; padding: 0 10px;">
+                Kittu Bas ek click aur... uske baad mere dil ki woh baatein khul jayengi jo shayad main lafzon mein kabhi keh nahi paaya...💗
+            </p>
+            <button class="next-btn" onclick="revealDashboard()">💝 Open My Heart</button>
+        </div>
+
+        <div id="kashishDashboard" style="display: none; width:100%;">
+            
+            <div id="dashboardStep1" class="step-dashboard">
+                <div class="final-card">
+                    <div style="border-bottom:1px solid #fae8ff; padding-bottom:8px; text-align: left;">
+                        <h2 style="font-size:1.6rem; margin:0;">💖 Dear Kashish</h2>
+                        <p style="font-size:0.75rem; color:#7e22ce; font-weight:bold;">Kashish's Secure Space 🔒</p>
+                    </div>
+                    <div class="scrollable-body-text typing-cursor" id="typeLetterBox"></div>
+                </div>
+                <button class="next-btn" onclick="advanceDashboardStep(2)">Next Mystery ✨</button>
+            </div>
+
+            <div id="dashboardStep2" class="step-dashboard">
+                <div class="final-card">
+                    <h2>✨ Things I Love About You</h2>
+                    <div class="scrollable-body-text reasons-container">
+                        <div class="reason-item-box">
+                            <div class="reason-title">🤍 Your shy nature</div>
+                            <div class="reason-desc">Tumhara sharmana mujhe har baar thoda aur smile karne ki wajah de deta hai.</div>
+                        </div>
+                        <div class="reason-item-box">
+                            <div class="reason-title">🌷 Your smile</div>
+                            <div class="reason-desc">Tumhari smile mein pata nahi kya baat hai, dil automatically khush ho jaata hai.</div>
+                        </div>
+                        <div class="reason-item-box">
+                            <div class="reason-title">🎀 Your kindness</div>
+                            <div class="reason-desc">Tumhara caring nature un cheezon mein se hai jo mujhe sabse zyada pasand hain.</div>
+                        </div>
+                        <div class="reason-item-box">
+                            <div class="reason-title">🌙 Our conversations</div>
+                            <div class="reason-desc">Tumse baat karte waqt waqt ka pata hi nahi chalta.</div>
+                        </div>
+                        <div class="reason-item-box">
+                            <div class="reason-title">💫 The comfort you bring</div>
+                            <div class="reason-desc">Tumhare saath sab kuch thoda zyada peaceful aur thoda zyada sahi lagta hai.</div>
+                        </div>
+                        <div class="reason-item-box">
+                            <div class="reason-title">❤️ Simply being you</div>
+                            <div class="reason-desc">Aur sabse zyada... mujhe tumhara bas tum hona pasand hai.</div>
+                        </div>
+                    </div>
+                </div>
+                <button class="next-btn" onclick="advanceDashboardStep(3)">Our Future Outlook 🌙</button>
+            </div>
+
+            <div id="dashboardStep3" class="step-dashboard">
+                <div class="final-card">
+                    <h2>🌙 Future Us</h2>
+                    <div class="scrollable-body-text typing-cursor" id="typeFutureBox"></div>
+                </div>
+                <button class="next-btn" onclick="advanceDashboardStep(4)">Unbox My Secrets 🎁</button>
+            </div>
+
+            <div id="dashboardStep4" class="step-dashboard">
+                <div class="final-card" style="height: 440px;">
+                    <h2 style="text-align: center;">🎁 Open When...</h2>
+                    <div class="scrollable-body-text openwhen-box">
+                        <details class="details-item">
+                            <summary>Open when you're sad 💔</summary>
+                            <p>Kashish,
+                            Mujhe nahi pata tum kis baat se upset ho, lekin itna zaroor pata hai ki tumhe sab kuch akele handle karne ki zaroorat nahi hai.
+                            Thoda sa rest lo, paani piyo, aur yaad rakho...
+                            Ek ladka hai jo tumhari smile ko bahut seriously leta hai. ❤️</p>
+                        </details>
+                        <details class="details-item">
+                            <summary>Open when you need a smile 😊</summary>
+                            <p>Ek second ke liye imagine karo...
+                            Main tumhare saamne baitha hoon, tum kuch bol rahi ho, aur main tumhe dekhne mein itna busy hoon ki aadhi baat sun hi nahi paaya. 😭❤️
+                            Bas Bas Bas,
+                            Aagyi aagyi Blush aagyi hehehe 😅
+                            Chalo ab cute si selfie bhej do smile ke saath....🫠</p>
+                        </details>
+                        <details class="details-item">
+                            <summary>Open when you miss me 🥺</summary>
+                            <p>Agar tum ye padh rahi ho, to shayari mujhe miss kar rahi ho.
+                            Sach bolun?
+                            Main bhi kabhi kabhi randomly phone uthata hoon aur sochta hoon ki abhi tumse baat ho jaaye.
+                            Distance annoying hai...
+                            Par tum ho, isliye worth it hai. 🌙❤️</p>
+                        </details>
+                        <details class="details-item">
+                            <summary>Open when you're angry at me 😤</summary>
+                            <p>Theek hai madam, gussa valid ho sakta hai...
+                            Lekin ye page padhne ke baad thoda sa gussa kam kar dena.
+                            Mujhe har argument se zyada tum important ho.
+                            Ab thoda sa smile bhi kar lo. 😌❤️</p>
+                        </details>
+                        <details class="details-item">
+                            <summary>Open when you doubt yourself 🤍</summary>
+                            <p>Kashish, 
+                            Kabhi kabhi tum khud ko na utna credit nahi deti jitna tum deserve karti ho.
+                            Tum sochti ho ki tum bas normal ho.
+                            Par meri nazar se dekho...
+                            Tum kisi se bhi kabhi bhi kam nahi ho, tum har wo cheej kar skti ho jo sab kar rahe hain bas khud par or mujhpr bharosa rakho.....❤️</p>
+                        </details>
+                        <details class="details-item">
+                            <summary>Our Beautiful Beginning ✨</summary>
+                            <p>10 January 2026.
+                            Ek normal sa din.
+                            Ek normal si conversation.
+                            Aur phir dheere dheere...
+                            Tum meri favourite notification ban gayi. ❤️🌙</p>
+                        </details>
+                    </div>
+                </div>
+
+                <div class="scratch-container">
+                    <div class="scratch-under-text">
+                        Congratulations Kashish meri jaan Tumne unlock kiya hai lifetime ke liye ek pagal sa ladka jo har din tumhe pyaar karne ki koshish karega. 🤭❤️
+                    </div>
+                    <canvas id="scratchCardLayer" class="scratch-canvas" width="410" height="155"></canvas>
+                </div>
+
+                <button class="next-btn" style="background: linear-gradient(135deg, #ec4899 0%, #db2777 100%); margin-top:20px; width:100%;" onclick="triggerVirtualHug()">Need a Virtual Hug? 🫂</button>
+
+                <div style="text-align: center; margin-top: 35px; margin-bottom: 20px;">
+                    <p style="font-weight: 600; font-size: 0.95rem;">If I had to choose again, I'd still choose you. 💜</p>
+                    <button class="back-btn" onclick="resetApp()">🔄 Restart Journey</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        function createStarrySky() {
+            for(let i=0; i<85; i++) {
+                const star = document.createElement('div');
+                star.classList.add('star');
+                star.style.width = Math.random() * 3 + 'px';
+                star.style.height = star.style.width;
+                star.style.left = Math.random() * 100 + 'vw';
+                star.style.top = Math.random() * 100 + 'vh';
+                star.style.animationDelay = Math.random() * 2 + 's';
+                document.body.appendChild(star);
+            }
+        }
+        createStarrySky();
+
+        function openEnvelope() {
+            const flap = document.getElementById('envFlap');
+            const gate = document.getElementById('envelope-gate');
+            if(flap) flap.style.transform = "rotateX(-180deg)";
+            
+            forcePlaySong(0);
+
+            setTimeout(() => {
+                if(gate) {
+                    gate.style.opacity = "0";
+                    gate.style.transform = "translateY(-100vh)";
+                    setTimeout(() => gate.remove(), 800);
+                }
+            }, 600);
+        }
+
+        function initializeSongBypass() {
+            forcePlaySong(0);
+            navigateTo('page2');
+        }
+
+        function forcePlaySong(startTime) {
+            const song = document.getElementById('loveSong');
+            const widget = document.getElementById('music-disk-widget');
+            if(song) {
+                if(startTime > 0) song.currentTime = startTime;
+                song.play().then(() => {
+                    if(widget && startTime >= 76) {
+                        widget.style.display = "flex";
+                        widget.classList.add('playing');
+                        widget.innerHTML = "🎵";
+                    }
+                }).catch(e => console.log("Audio contextual connection established safely."));
+            }
+        }
+
+        const rawLetterText = `Pata nahi tumhe ehsaas hai ya nahi, lekin meri roz ki zindagi mein tumhara hissa ab kaafi bada ho chuka hai.\n\nKabhi kisi baat par hasna ho, kabhi din thoda mushkil ho, kabhi koi chhoti si achievement ho... sabse pehle tum yaad aati ho.\n\nHumare beech distance zaroor hai, par sach kahu toh tum mujhse utni door kabhi lagti hi nahi. Tum meri daily routine ka woh part ban gayi ho jiske bina din thoda adhoora sa lagta hai.\n\nMujhe nahi pata future kya likh ke rakha hai, lekin itna zaroor pata hai ki tumhari care karna, tumhare liye pray karna aur tumhe khush dekhna meri favourite cheezon mein se ek hai.\n\nAur haan...\n\nThank you, meri life mein aane ke liye.\nAur thank you, Kashish hone ke liye. ❤️\n\nYours,\nShubham`;
+        
+        const rawFutureText = `Ek din aisa aayega jab ye late-night calls, ek dusre ko miss karna, aur milne ka intezaar... sab sirf yaadein hongi.\n\nHum shayad saath baith kar in baaton par hasenge aur kahenge,\n"Yaad hai kitna mushkil lagta tha?"\n\nPar tab tak, main har call, har message aur tumhare saath bitaaye har pal ko sambhal kar rakhunga.\n\nKyuki destination se pehle, mujhe tumhare saath ye journey bhi bohot pyaari hai. ❤️`;
+
+        document.addEventListener('click', function(e) {
+            if(e.target.tagName === 'BUTTON' || e.target.classList.contains('choice-btn') || e.target.id === 'scratchCardLayer') return;
+            for(let i=0; i<4; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('tap-heart');
+                particle.innerHTML = ['❤️','✨','💜','🌸'][Math.floor(Math.random()*4)];
+                particle.style.left = e.pageX + 'px';
+                particle.style.top = e.pageY + 'px';
+                
+                const mx = (Math.random() - 0.5) * 100 + 'px';
+                const my = (Math.random() - 0.5) * 100 - 50 + 'px';
+                particle.style.setProperty('--mx', mx);
+                particle.style.setProperty('--my', my);
+                
+                document.body.appendChild(particle);
+                setTimeout(() => particle.remove(), 2000);
+            }
+        });
+
+        function toggleMusicPlayback() {
+            const song = document.getElementById('loveSong');
+            const widget = document.getElementById('music-disk-widget');
+            if(song.paused) {
+                song.play();
+                widget.classList.add('playing');
+                widget.innerHTML = "🎵";
+            } else {
+                song.pause();
+                widget.classList.remove('playing');
+                widget.innerHTML = "⏸️";
+            }
+        }
+
+        function setupScratchCard() {
+            const canvas = document.getElementById('scratchCardLayer');
+            if(!canvas) return;
+            const ctx = canvas.getContext('2d');
+            
+            ctx.globalCompositeOperation = 'source-over';
+            ctx.fillStyle = '#c084fc';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            ctx.fillStyle = '#ffffff';
+            ctx.font = 'bold 16px Quicksand, sans-serif';
+            ctx.textAlign = 'center';
+            ctx.fillText("Shubham's Custom Coupon 🏷️", canvas.width/2, canvas.height/2 - 10);
+            ctx.fillStyle = '#fae8ff';
+            ctx.font = '13px Quicksand, sans-serif';
+            ctx.fillText("✨ Scratch with Love to Reveal ✨", canvas.width/2, canvas.height/2 + 15);
+            
+            let isDrawing = false;
+            
+            function getCoords(e) {
+                const rect = canvas.getBoundingClientRect();
+                const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+                const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+                
+                // Perfect tracking multiplier ratio computation for cross-device viewport sizes
+                const canvasX = ((clientX - rect.left) / rect.width) * canvas.width;
+                const canvasY = ((clientY - rect.top) / rect.height) * canvas.height;
+                
+                return { x: canvasX, y: canvasY };
+            }
+
+            function scratchStart(e) {
+                isDrawing = true;
+                scratchMove(e);
+            }
+
+            function scratchMove(e) {
+                if(!isDrawing) return;
+                e.preventDefault();
+                const coords = getCoords(e);
+                ctx.globalCompositeOperation = 'destination-out';
+                ctx.beginPath();
+                ctx.arc(coords.x, coords.y, 28, 0, Math.PI * 2);
+                ctx.fill();
+            }
+            
+            canvas.addEventListener('mousedown', scratchStart);
+            canvas.addEventListener('mousemove', scratchMove);
+            window.addEventListener('mouseup', () => isDrawing = false);
+            
+            canvas.addEventListener('touchstart', scratchStart, {passive: false});
+            canvas.addEventListener('touchmove', scratchMove, {passive: false});
+            window.addEventListener('touchend', () => isDrawing = false);
+        }
+
+        function triggerVirtualHug() {
+            alert("Sending you the warmest hug right now! Door hoon par paas hoon. ❤️🫂");
+            for(let i=0; i<25; i++) {
+                setTimeout(() => {
+                    const hugHeart = document.createElement('div');
+                    hugHeart.classList.add('hug-heart');
+                    hugHeart.innerHTML = ['💖','🫂','❤️','✨'][Math.floor(Math.random()*4)];
+                    hugHeart.style.left = Math.random() * 90 + 'vw';
+                    hugHeart.style.setProperty('--rx', (Math.random() - 0.5) * 150 + 'px');
+                    hugHeart.style.animationDuration = (Math.random() * 1.5 + 2) + 's';
+                    document.body.appendChild(hugHeart);
+                    setTimeout(() => hugHeart.remove(), 3500);
+                }, i * 80);
+            }
+        }
+
+        function navigateTo(pageId) {
+            document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
+            document.getElementById(pageId).classList.add('active');
+            window.scrollTo(0,0);
+        }
+
+        const anniversaryDate = new Date(2026, 0, 10); 
+        function updateLoveCounter() {
+            const now = new Date();
+            const diffInMs = now - anniversaryDate;
+            const diffInDays = Math.floor(diffInMs / (1000 * 60 * 60 * 24));
+            const diffInHours = Math.floor((diffInMs % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const diffInMins = Math.floor((diffInMs % (1000 * 60 * 60)) / (1000 * 60));
+            const diffInSecs = Math.floor((diffInMs % (1000 * 60)) / 1000);
+            const counterEl = document.getElementById('love-counter');
+            if(counterEl) {
+                counterEl.innerHTML = `DATABASE UPTIME:<br><span>${diffInDays}</span> Days<br><span>${diffInHours}</span> Hours<br><span>${diffInMins}</span> Minutes<br>and <span>${diffInSecs}</span> Seconds`;
+            }
+        }
+        setInterval(updateLoveCounter, 1000); updateLoveCounter();
+
+        // RUNAWAY BOUNDARY SECURITY SYSTEM (Locks layout inside white card completely)
+        function handleButtonRunaway(btnId, containerId, targetStaticBtnId) {
+            const noBtn = document.getElementById(btnId);
+            const container = document.getElementById(containerId);
+            const staticBtn = document.getElementById(targetStaticBtnId);
+            
+            const padW = container.clientWidth;
+            const padH = container.clientHeight;
+            const btnW = noBtn.clientWidth;
+            const btnH = noBtn.clientHeight;
+
+            // Strict internal grid clipping to prevent box leakage
+            const padding = 10;
+            const maxX = padW - btnW - padding;
+            const maxY = padH - btnH - padding;
+
+            let randomX, randomY;
+            let overlap = true;
+            let safetyCounter = 0;
+
+            while(overlap && safetyCounter < 30) {
+                randomX = Math.floor(Math.random() * (maxX - padding + 1)) + padding;
+                randomY = Math.floor(Math.random() * (maxY - padding + 1)) + padding;
+                
+                // Check collision coordinate overlap with Green static button
+                const greenXMin = staticBtn.offsetLeft - 15;
+                const greenXMax = staticBtn.offsetLeft + staticBtn.clientWidth + 15;
+                const greenYMin = staticBtn.offsetTop - 15;
+                const greenYMax = staticBtn.offsetTop + staticBtn.clientHeight + 15;
+
+                if (!(randomX >= greenXMin && randomX <= greenXMax && randomY >= greenYMin && randomY <= greenYMax)) {
+                    overlap = false;
+                }
+                safetyCounter++;
+            }
+
+            noBtn.style.left = randomX + 'px'; 
+            noBtn.style.top = randomY + 'px';
+            noBtn.style.right = 'auto';
+        }
+
+        function moveNo1(e) {
+            if(e) e.preventDefault();
+            handleButtonRunaway('no-btn', 'btnContainer1', 'yes-btn');
+        }
+
+        function winGame1() {
+            forcePlaySong(76); 
+            document.getElementById('gameQuestion1').innerHTML = "Awww, I knew it! Mujhe poora bharosa thaa ki tum 'YES' hi kahogi. 🥰";
+            setTimeout(() => {
+                const noBtn = document.getElementById('no-btn');
+                noBtn.style.position = 'absolute';
+                noBtn.style.left = 'auto'; noBtn.style.top = '20px'; noBtn.style.right = '5%';
+                navigateTo('page4');
+                document.getElementById('gameQuestion1').innerHTML = "Do you love me the most in this entire universe? 🥺";
+            }, 1800);
+        }
+
+        function moveNo2(e) {
+            if(e) e.preventDefault();
+            handleButtonRunaway('truth-no', 'btnContainer2', 'truth-yes');
+        }
+
+        function winGame2() {
+            document.getElementById('gameQuestion2').innerHTML = "Hehehe main bhi bohot zyada pyaar karta hoon! ❤️ Moving forward...";
+            setTimeout(() => {
+                const noBtn = document.getElementById('truth-no');
+                noBtn.style.position = 'absolute';
+                noBtn.style.left = 'auto'; noBtn.style.top = '20px'; noBtn.style.right = '5%';
+                navigateTo('page6');
+                document.getElementById('gameQuestion2').innerHTML = "Kashish meri jaan, Tum Mujhse Kitna pyaar karti ho 🤭";
+            }, 1800);
+        }
+
+        let typeInterval;
+        function runTypewriter(targetId, fullText) {
+            clearInterval(typeInterval);
+            const container = document.getElementById(targetId);
+            container.innerHTML = "";
+            container.classList.add('typing-cursor');
+            let idx = 0;
+            
+            typeInterval = setInterval(() => {
+                if (idx < fullText.length) {
+                    container.innerHTML += fullText.charAt(idx);
+                    idx++;
+                    container.scrollTop = container.scrollHeight; 
+                } else {
+                    clearInterval(typeInterval);
+                    container.classList.remove('typing-cursor');
+                }
+            }, 30); 
+        }
+
+        function revealDashboard() {
+            document.getElementById('finalConfirmModule').style.display = 'none';
+            document.getElementById('kashishDashboard').style.display = 'block';
+            advanceDashboardStep(1);
+        }
+
+        function advanceDashboardStep(stepNumber) {
+            clearInterval(typeInterval);
+            document.querySelectorAll('.step-dashboard').forEach(step => step.classList.remove('active'));
+            document.getElementById('dashboardStep' + stepNumber).classList.add('active');
+            
+            if(stepNumber === 1) {
+                runTypewriter('typeLetterBox', rawLetterText);
+            } else if (stepNumber === 3) {
+                runTypewriter('typeFutureBox', rawFutureText);
+            } else if (stepNumber === 4) {
+                setTimeout(setupScratchCard, 80); 
+            }
+            
+            const activeScrollBox = document.querySelector('#dashboardStep' + stepNumber + ' .scrollable-body-text');
+            if(activeScrollBox && stepNumber !== 1 && stepNumber !== 3) activeScrollBox.scrollTop = 0;
+            window.scrollTo(0,0);
+        }
+
+        function resetApp() {
+            const song = document.getElementById('loveSong');
+            const widget = document.getElementById('music-disk-widget');
+            if(song) { song.pause(); song.currentTime = 0; }
+            if(widget) { widget.style.display = "none"; widget.classList.remove('playing'); }
+            clearInterval(typeInterval);
+            
+            window.location.reload(); 
+        }
+
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart-particle');
+            heart.innerHTML = ['🔮', '💜', '✨', '🌸'][Math.floor(Math.random() * 4)];
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = (Math.random() * 2 + 4) + 's';
+            document.body.appendChild(heart);
+            setTimeout(() => { heart.remove(); }, 6000);
+        }
+        setInterval(createHeart, 1100);
+    </script>
+</body>
+</html>
