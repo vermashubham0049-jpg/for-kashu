@@ -200,7 +200,7 @@
         #love-counter span { color: #7e22ce; font-weight: 600; font-size: 2rem; font-family: var(--font-mono); text-shadow: 0 0 5px rgba(192,132,252,0.2); }
 
         .game-area { position: relative; width: 100%; height: 320px; background: white; color: var(--text-dark); border-radius: 20px; box-shadow: 0 10px 25px rgba(126,34,206,0.1); margin-top: 15px; overflow: hidden; display: flex; flex-direction: column; align-items: center; padding: 25px 15px; border: 1px solid #e9d5ff; }
-        .game-buttons { position: relative; width: 100%; width: 100%; height: 180px; margin-top: 15px; }
+        .game-buttons { position: relative; width: 100%; height: 180px; margin-top: 15px; }
         
         .choice-btn { 
             width: 130px !important;
@@ -345,6 +345,7 @@
         <p style="font-size: 0.9rem; opacity:0.6; margin-top: 25px; font-family: var(--font-mono);">Tap Heart Lock to Decrypt 🔓</p>
     </div>
 
+    <!-- AUDIO ENGINE TARGET FIXED -->
     <audio id="loveSong" loop preload="auto">
         <source src="https://pub-832f91a5dbfe43f3b925b4fa267cc2fa.r2.dev/Khwaab_Eclipse_Nova_Acoustic_Stream.mp3" type="audio/mpeg">
     </audio>
@@ -626,13 +627,21 @@
             const widget = document.getElementById('music-disk-widget');
             if(song) {
                 if(startTime > 0) song.currentTime = startTime;
-                song.play().then(() => {
-                    if(widget && startTime >= 76) {
-                        widget.style.display = "flex";
-                        widget.classList.add('playing');
-                        widget.innerHTML = "🎵";
-                    }
-                }).catch(e => console.log("Audio contextual connection established safely."));
+                
+                // Audio force re-trigger pattern setup
+                const startPromise = song.play();
+                if(startPromise !== undefined) {
+                    startPromise.then(() => {
+                        if(widget && startTime >= 76) {
+                            widget.style.display = "flex";
+                            widget.classList.add('playing');
+                            widget.innerHTML = "🎵";
+                        }
+                    }).catch(e => {
+                        // Fallback context: re-hook on explicit audio bypass triggers
+                        console.log("Browser unblock waiting.");
+                    });
+                }
             }
         }
 
@@ -641,6 +650,12 @@
         const rawFutureText = `Ek din aisa aayega jab ye late-night calls, ek dusre ko miss karna, aur milne ka intezaar... sab sirf yaadein hongi.\n\nHum shayad saath baith kar in baaton par hasenge aur kahenge,\n"Yaad hai kitna mushkil lagta tha?"\n\nPar tab tak, main har call, har message aur tumhare saath bitaaye har pal ko sambhal kar rakhunga.\n\nKyuki destination se pehle, mujhe tumhare saath ye journey bhi bohot pyaari hai. ❤️`;
 
         document.addEventListener('click', function(e) {
+            // Unblock audio anytime they interact anywhere on mobile
+            const song = document.getElementById('loveSong');
+            if(song && song.paused && !document.getElementById('envelope-gate')) {
+                song.play().catch(() => {});
+            }
+
             if(e.target.tagName === 'BUTTON' || e.target.classList.contains('choice-btn') || e.target.id === 'scratchCardLayer') return;
             for(let i=0; i<4; i++) {
                 const particle = document.createElement('div');
@@ -697,7 +712,6 @@
                 const clientX = e.touches ? e.touches[0].clientX : e.clientX;
                 const clientY = e.touches ? e.touches[0].clientY : e.clientY;
                 
-                // Perfect tracking multiplier ratio computation for cross-device viewport sizes
                 const canvasX = ((clientX - rect.left) / rect.width) * canvas.width;
                 const canvasY = ((clientY - rect.top) / rect.height) * canvas.height;
                 
@@ -765,7 +779,6 @@
         }
         setInterval(updateLoveCounter, 1000); updateLoveCounter();
 
-        // RUNAWAY BOUNDARY SECURITY SYSTEM (Locks layout inside white card completely)
         function handleButtonRunaway(btnId, containerId, targetStaticBtnId) {
             const noBtn = document.getElementById(btnId);
             const container = document.getElementById(containerId);
@@ -776,8 +789,7 @@
             const btnW = noBtn.clientWidth;
             const btnH = noBtn.clientHeight;
 
-            // Strict internal grid clipping to prevent box leakage
-            const padding = 10;
+            const padding = 15;
             const maxX = padW - btnW - padding;
             const maxY = padH - btnH - padding;
 
@@ -785,15 +797,14 @@
             let overlap = true;
             let safetyCounter = 0;
 
-            while(overlap && safetyCounter < 30) {
+            while(overlap && safetyCounter < 40) {
                 randomX = Math.floor(Math.random() * (maxX - padding + 1)) + padding;
                 randomY = Math.floor(Math.random() * (maxY - padding + 1)) + padding;
                 
-                // Check collision coordinate overlap with Green static button
-                const greenXMin = staticBtn.offsetLeft - 15;
-                const greenXMax = staticBtn.offsetLeft + staticBtn.clientWidth + 15;
-                const greenYMin = staticBtn.offsetTop - 15;
-                const greenYMax = staticBtn.offsetTop + staticBtn.clientHeight + 15;
+                const greenXMin = staticBtn.offsetLeft - 25;
+                const greenXMax = staticBtn.offsetLeft + staticBtn.clientWidth + 25;
+                const greenYMin = staticBtn.offsetTop - 25;
+                const greenYMax = staticBtn.offsetTop + staticBtn.clientHeight + 25;
 
                 if (!(randomX >= greenXMin && randomX <= greenXMax && randomY >= greenYMin && randomY <= greenYMax)) {
                     overlap = false;
